@@ -22,7 +22,7 @@ def save_html(logdir, x, zs, labels, alignments, hps):
                         alignment=alignments[item] if alignments is not None else None)
             item_dir = f'{logdir}/item_{item}'
             _save_item_html(item_dir, item, item, data)
-            print(f"<iframe style='height: 100%; width: 100%;' frameborder='0' scrolling='no' src='item_{item}/index.html'></iframe>", file=html)
+            print(f"<iframe style='width: 100%;' frameborder='0' scrolling='no'  onload='javascript:(function(o){{o.style.height=o.contentWindow.document.body.scrollHeight+\"px\";}}(this));' src='item_{item}/index.html'></iframe>", file=html)
         print("</body></html>", file=html)  
 
 def _save_item_html(item_dir, item_id, item_name, data):
@@ -60,7 +60,7 @@ def _save_item_html(item_dir, item_id, item_name, data):
             im = Image.fromarray(np.uint8(alignment * 255)).resize((512, 1024)).transpose(Image.ROTATE_90)
             img_src = f'align.png'
             im.save(f'{item_dir}/{img_src}')
-            print(f"<img id='{img_src}' src='{img_src}' \>", file=html)
+            print(f"<img id='{img_src}' src='{img_src}' />", file=html)
 
             # Smaller alignment json for animation
             total_alignment_length = total_length // 16
